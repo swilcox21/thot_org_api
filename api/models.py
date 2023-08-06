@@ -9,7 +9,6 @@ class Reminder(models.Model):
     recurring = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     text = models.CharField(max_length=5000)
-    date = models.DateField()
     char1 = models.CharField(max_length=5000)
     char2 = models.CharField(max_length=5000)
     char3 = models.CharField(max_length=5000)
