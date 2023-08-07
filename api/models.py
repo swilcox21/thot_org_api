@@ -57,7 +57,7 @@ class Day(models.Model):
         return self.name
 
 class Daily(models.Model):
-    day = models.ForeignKey('auth.User', related_name='dailies', on_delete=models.CASCADE)
+    day = models.ForeignKey('auth.User', related_name='dailys', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     date = models.DateField(auto_now_add=True)
     text = models.CharField(max_length=5000)

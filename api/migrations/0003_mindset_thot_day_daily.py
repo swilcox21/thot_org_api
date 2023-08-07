@@ -123,7 +123,7 @@ class Migration(migrations.Migration):
                 ('bool4', models.BooleanField(default=False)),
                 ('bool5', models.BooleanField(default=False)),
                 ('bool6', models.BooleanField(default=False)),
-                ('day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dailies', to=settings.AUTH_USER_MODEL)),
+                ('day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dailys', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['order'],
