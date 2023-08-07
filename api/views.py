@@ -89,6 +89,13 @@ class DailyView(APIView):
                 ser_daily.save()
             dailys.append(ser_daily.data)
         return Response(dailys, status=status.HTTP_202_ACCEPTED)
+    def delete(self,request):
+        dailys = []
+        for t in request.data:
+            daily = get_object_or_404(Thot.objects.all(), id=t.get('id'))
+            dailys.append(daily)
+            daily.delete()
+        return Response({"message": "dailys: `{}` has been deleted".format(dailys)}, status=status.HTTP_202_ACCEPTED)
 
 class DayView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
