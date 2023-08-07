@@ -32,7 +32,7 @@ class Reminder(models.Model):
 class Day(models.Model):
     owner = models.ForeignKey('auth.User', related_name='days', on_delete=models.CASCADE)
     created_date = models.DateField(auto_now_add=True)
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     weather = models.CharField(max_length=5000, default="")
     bool1 = models.BooleanField(default=True)
     int1 = models.IntegerField(default=False)
