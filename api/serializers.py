@@ -61,7 +61,7 @@ class DailySerializer(serializers.ModelSerializer):
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:
         model = Daily
-        fields = ['date','text','id','owner','show',,'order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        fields = ['date','text','id','owner','show','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.date = validated_data.get('date', instance.date)
         instance.order = validated_data.get('order', instance.order)
