@@ -68,8 +68,8 @@ class DailyView(APIView):
             daily = get_object_or_404(Daily.objects.all(), id = daily_id)
             serialized_daily = DailySerializer(daily)
             return Response(serialized_daily.data)
-        all_dailys = Daily.objects.all()
-        serializer = DailySerializer(all_dailys, many=True)
+        all_dailies = Daily.objects.all()
+        serializer = DailySerializer(all_dailies, many=True)
         return Response(serializer.data)
     def post(self, request):
         serializer = DailySerializer(data=request.data, many=True)
@@ -79,7 +79,7 @@ class DailyView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        dailys = []
+        dailies = []
         for t in request.data:
             daily = get_object_or_404(Daily.objects.all(), id=t.get('id'))
             print('!!!!!USER:!!!!!!', t)
@@ -87,8 +87,8 @@ class DailyView(APIView):
             print('!!!!!USER:!!!!!!', request)
             if ser_daily.is_valid(raise_exception=True):
                 ser_daily.save()
-            dailys.append(ser_daily.data)
-        return Response(dailys, status=status.HTTP_202_ACCEPTED)
+            dailies.append(ser_daily.data)
+        return Response(dailies, status=status.HTTP_202_ACCEPTED)
 
 class DayView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
