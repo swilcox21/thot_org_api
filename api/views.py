@@ -135,7 +135,7 @@ class DayView(APIView):
 class ThotView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     def get(self, request, thot_id=None):
-        print('request.data', Mindset.objects.get(id=3).name)
+        print('request.data', Mindset.objects.get(id=1).name)
         if thot_id is not None:
             thot = get_object_or_404(Thot.objects.all(), id = thot_id)
             serialized_thot = ThotSerializer(thot)
