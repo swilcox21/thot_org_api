@@ -54,7 +54,7 @@ class _DailySerializer(serializers.ModelSerializer):
 class DailySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     day = _DaySerializer(required=False)
-    date = serializers.DateField(read_only=False)
+    date = serializers.DateField()
     text = serializers.CharField(required=False, allow_blank=True, max_length=5000, trim_whitespace=False)
     char1 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     char2 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
@@ -64,10 +64,10 @@ class DailySerializer(serializers.ModelSerializer):
         fields = ['date','text','id','day','show','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.day = validated_data.get('day', instance.day)
+        instance.text = validated_data.get('text', instance.text)
         instance.date = validated_data.get('date', instance.date)
         instance.order = validated_data.get('order', instance.order)
         instance.show = validated_data.get('show', instance.show)
-        instance.text = validated_data.get('text', instance.text)
         instance.char1 = validated_data.get('char1', instance.char1)
         instance.char2 = validated_data.get('char2', instance.char2)
         instance.char3 = validated_data.get('char3', instance.char3)
