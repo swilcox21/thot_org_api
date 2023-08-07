@@ -12,9 +12,8 @@ class ReminderSerializer(serializers.ModelSerializer):
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:
         model = Reminder
-        fields = ['text','id','owner','date','recurring','completed','order','char1','char2','char3','int1','int2','int3','bool1','bool2','bool3','bool4','bool5','bool5','bool6','bool7','bool8','bool9']
+        fields = ['text','id','owner','recurring','completed','order','char1','char2','char3','int1','int2','int3','bool1','bool2','bool3','bool4','bool5','bool5','bool6','bool7','bool8','bool9']
     def update(self, instance, validated_data):
-        instance.date = validated_data.get('date', instance.date)
         instance.order = validated_data.get('order', instance.order)
         instance.recurring = validated_data.get('recurring', instance.recurring)
         instance.completed = validated_data.get('completed', instance.completed)
