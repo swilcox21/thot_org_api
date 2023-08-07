@@ -61,12 +61,11 @@ class DailySerializer(serializers.ModelSerializer):
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:
         model = Daily
-        fields = ['date','text','id','owner','recurring','completed','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        fields = ['date','text','id','owner','show',,'order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.date = validated_data.get('date', instance.date)
         instance.order = validated_data.get('order', instance.order)
-        instance.recurring = validated_data.get('recurring', instance.recurring)
-        instance.completed = validated_data.get('completed', instance.completed)
+        instance.show = validated_data.get('show', instance.show)
         instance.text = validated_data.get('text', instance.text)
         instance.char1 = validated_data.get('char1', instance.char1)
         instance.char2 = validated_data.get('char2', instance.char2)
