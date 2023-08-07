@@ -63,37 +63,32 @@ class ReminderView(APIView):
 class DailyView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     def get(self, request, daily_id=None):
-        print('request.data', self)
+        print('request.data', Mindset.objects.get(id=1).name)
         if daily_id is not None:
             daily = get_object_or_404(Daily.objects.all(), id = daily_id)
             serialized_daily = DailySerializer(daily)
             return Response(serialized_daily.data)
-        all_dailies = Daily.objects.filter(owner=request.user.id)
-        serializer = DailySerializer(all_dailies, many=True)
+        all_dailys = Daily.objects.all()
+        serializer = DailySerializer(all_dailys, many=True)
         return Response(serializer.data)
     def post(self, request):
         serializer = DailySerializer(data=request.data, many=True)
-        print('user', request.user)
+        print('!!!!!USER:!!!!!!', request.data[0]['mindset'])
         if serializer.is_valid():
-            serializer.save(owner=self.request.user)
+            serializer.save(mindset=Mindset.objects.filter(id=request.data[0]['mindset'].get('id')).first())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        dailies = []
-        for r in request.data:
-            daily = get_object_or_404(Daily.objects.all(), id=r.get('id'))
-            print('!!!!!USER:!!!!!!', r)
-            ser_daily = DailySerializer(instance=daily, data=r, partial=True)
+        dailys = []
+        for t in request.data:
+            daily = get_object_or_404(Daily.objects.all(), id=t.get('id'))
+            print('!!!!!USER:!!!!!!', t)
+            ser_daily = DailySerializer(instance=daily, data=t, partial=True)
             print('!!!!!USER:!!!!!!', request)
             if ser_daily.is_valid(raise_exception=True):
                 ser_daily.save()
-            dailies.append(ser_daily.data)
-        return Response(dailies, status=status.HTTP_202_ACCEPTED)
-    def delete(self,request,daily_id):
-        res = get_object_or_404(Daily.objects.all(), id=daily_id)
-        daily = get_object_or_404(Daily.objects.all(), id=daily_id)
-        daily.delete()
-        return Response({"message": "reminder: `{}` has been deleted".format(res)}, status=status.HTTP_202_ACCEPTED)
+            dailys.append(ser_daily.data)
+        return Response(dailys, status=status.HTTP_202_ACCEPTED)
 
 class DayView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
