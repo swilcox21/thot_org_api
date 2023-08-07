@@ -90,8 +90,8 @@ class DailyView(APIView):
             dailys.append(ser_daily.data)
         return Response(dailys, status=status.HTTP_202_ACCEPTED)
     def delete(self,request,daily_id):
-        d = get_object_or_404(Mindset.objects.all(), id=daily_id)
-        daily = get_object_or_404(Mindset.objects.all(), id=daily_id)
+        d = get_object_or_404(Daily.objects.all(), id=daily_id)
+        daily = get_object_or_404(Daily.objects.all(), id=daily_id)
         daily.delete()
         return Response({"message": "dailys: `{}` has been deleted".format(d)}, status=status.HTTP_202_ACCEPTED)
 
@@ -125,8 +125,8 @@ class DayView(APIView):
             days.append(ser_day.data)
         return Response(days.data, status=status.HTTP_202_ACCEPTED)
     def delete(self,request,day_id):
-        d = get_object_or_404(Mindset.objects.all(), id=day_id)
-        day = get_object_or_404(Mindset.objects.all(), id=day_id)
+        d = get_object_or_404(Day.objects.all(), id=day_id)
+        day = get_object_or_404(Day.objects.all(), id=day_id)
         day.delete()
         return Response({"message": "day: `{}` has been deleted".format(d)}, status=status.HTTP_202_ACCEPTED)
     
