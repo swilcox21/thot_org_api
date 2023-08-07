@@ -177,6 +177,9 @@ class MindsetSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     owner = serializers.ReadOnlyField(source='owner.username')
     name = serializers.CharField(required=False, allow_blank=True, max_length=5000)
+    char1 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
+    char2 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
+    char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     thots = _ThotSerializer(many=True, required=False)
     class Meta:
         model = Mindset
