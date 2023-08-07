@@ -80,22 +80,20 @@ class DailyView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
         dailys = []
-        for t in request.data:
-            daily = get_object_or_404(Daily.objects.all(), id=t.get('id'))
-            print('!!!!!USER:!!!!!!', t)
-            ser_daily = DailySerializer(instance=daily, data=t, partial=True)
+        for d in request.data:
+            daily = get_object_or_404(Daily.objects.all(), id=d.get('id'))
+            print('!!!!!USER:!!!!!!', d)
+            ser_daily = DailySerializer(instance=daily, data=d, partial=True)
             print('!!!!!USER:!!!!!!', request)
             if ser_daily.is_valid(raise_exception=True):
                 ser_daily.save()
             dailys.append(ser_daily.data)
         return Response(dailys, status=status.HTTP_202_ACCEPTED)
-    def delete(self,request):
-        dailys = []
-        for t in request.data:
-            daily = get_object_or_404(Daily.objects.all(), id=t.get('id'))
-            dailys.append(daily)
-            daily.delete()
-        return Response({"message": "dailys: `{}` has been deleted".format(dailys)}, status=status.HTTP_202_ACCEPTED)
+    def delete(self,request,daily_id):
+        d = get_object_or_404(Mindset.objects.all(), id=daily_id)
+        daily = get_object_or_404(Mindset.objects.all(), id=daily_id)
+        daily.delete()
+        return Response({"message": "dailys: `{}` has been deleted".format(d)}, status=status.HTTP_202_ACCEPTED)
 
 class DayView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
@@ -126,13 +124,20 @@ class DayView(APIView):
                 ser_day.save()
             days.append(ser_day.data)
         return Response(days.data, status=status.HTTP_202_ACCEPTED)
-    def delete(self,request):
-        days = []
-        for f in request.data:
-            day = get_object_or_404(Day.objects.all(), id=f.get('id'))
-            days.append(day)
-            day.delete()
-        return Response({"message": "`{}` have been deleted".format(days)},status=status.HTTP_202_ACCEPTED)
+    def delete(self,request,day_id):
+        d = get_object_or_404(Mindset.objects.all(), id=day_id)
+        day = get_object_or_404(Mindset.objects.all(), id=day_id)
+        day.delete()
+        return Response({"message": "day: `{}` has been deleted".format(d)}, status=status.HTTP_202_ACCEPTED)
+    
+    ### MASS DELETE CODE BELOW
+    # def delete(self,request):
+    #     days = []
+    #     for f in request.data:
+    #         day = get_object_or_404(Day.objects.all(), id=f.get('id'))
+    #         days.append(day)
+    #         day.delete()
+    #     return Response({"message": "`{}` have been deleted".format(days)},status=status.HTTP_202_ACCEPTED)
 
 class ThotView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
