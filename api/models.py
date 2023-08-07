@@ -58,8 +58,7 @@ class Day(models.Model):
 
 class Daily(models.Model):
     day = models.ForeignKey('auth.User', related_name='dailys', on_delete=models.CASCADE)
-    created_date = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(auto_now_add=True)
+    created_date = models.DateField(auto_now_add=True)
     text = models.CharField(max_length=5000)
     order = models.IntegerField(default=1)
     show = models.BooleanField(default=False)
