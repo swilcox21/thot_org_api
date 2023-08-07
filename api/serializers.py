@@ -45,11 +45,11 @@ class _DaySerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:                                 
         model = Day
-        fields = ['name','id','owner']
+        fields = ['created_date','name','id','owner']
 class _DailySerializer(serializers.ModelSerializer): 
     class Meta:                                 
         model = Daily
-        fields = ['text','id','show','order']
+        fields = ['text','id','order']
 
 class DailySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
@@ -61,8 +61,9 @@ class DailySerializer(serializers.ModelSerializer):
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:
         model = Daily
-        fields = ['date','text','id','owner','show','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        fields = ['date','text','id','day','show','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
+        instance.day = validated_data.get('day', instance.day)
         instance.date = validated_data.get('date', instance.date)
         instance.order = validated_data.get('order', instance.order)
         instance.show = validated_data.get('show', instance.show)
@@ -100,7 +101,7 @@ class DaySerializer(serializers.ModelSerializer):
     dailies = _DailySerializer(many=True, required=False)
     class Meta:
         model = Day
-        fields = ['name','id','owner','created_date','name','weather','dailies','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        fields = ['created_date','name','id','owner','weather','dailies','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.weather = validated_data.get('weather', instance.weather)
         instance.name = validated_data.get('name', instance.name)
@@ -133,7 +134,7 @@ class _MindsetSerializer(serializers.ModelSerializer):
 class _ThotSerializer(serializers.ModelSerializer): 
     class Meta:                                 
         model = Thot
-        fields = ['text','id','show','order']
+        fields = ['text','id','order']
 
 class ThotSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
