@@ -101,9 +101,9 @@ class DaySerializer(serializers.ModelSerializer):
     dailies = _DailySerializer(many=True, required=False)
     class Meta:
         model = Day
-        fields = ['name','id','owner','order','image','thots','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        fields = ['name','id','owner','created_date','name','weather','thots','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
-        instance.image = validated_data.get('image', instance.image)
+        instance.weather = validated_data.get('weather', instance.weather)
         instance.name = validated_data.get('name', instance.name)
         instance.char1 = validated_data.get('char1', instance.char1)
         instance.char2 = validated_data.get('char2', instance.char2)
