@@ -92,7 +92,7 @@ class DailyView(APIView):
     def delete(self,request):
         dailys = []
         for t in request.data:
-            daily = get_object_or_404(Thot.objects.all(), id=t.get('id'))
+            daily = get_object_or_404(Daily.objects.all(), id=t.get('id'))
             dailys.append(daily)
             daily.delete()
         return Response({"message": "dailys: `{}` has been deleted".format(dailys)}, status=status.HTTP_202_ACCEPTED)
