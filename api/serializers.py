@@ -123,7 +123,7 @@ class DaySerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     def create(self, validated_data):
-        return Mindset.objects.create(**validated_data)
+        return Day.objects.create(**validated_data)
 
 class _MindsetSerializer(serializers.ModelSerializer): 
     owner = serializers.ReadOnlyField(source='owner.username')
