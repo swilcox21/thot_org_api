@@ -163,13 +163,11 @@ class ThotView(APIView):
                 ser_thot.save()
             thots.append(ser_thot.data)
         return Response(thots, status=status.HTTP_202_ACCEPTED)
-    def delete(self,request):
-        thots = []
-        for t in request.data:
-            thot = get_object_or_404(Thot.objects.all(), id=t.get('id'))
-            thots.append(thot)
-            thot.delete()
-        return Response({"message": "thots: `{}` has been deleted".format(thots)}, status=status.HTTP_202_ACCEPTED)
+    def delete(self,request,thot_id):
+        t = get_object_or_404(Mindset.objects.all(), id=thot_id)
+        thot = get_object_or_404(Mindset.objects.all(), id=thot_id)
+        thot.delete()
+        return Response({"message": "thots: `{}` has been deleted".format(t)}, status=status.HTTP_202_ACCEPTED)
 
 class MindsetView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
@@ -200,10 +198,8 @@ class MindsetView(APIView):
                 ser_mindset.save()
             mindsets.append(ser_mindset.data)
         return Response(mindsets.data, status=status.HTTP_202_ACCEPTED)
-    def delete(self,request):
-        mindsets = []
-        for f in request.data:
-            mindset = get_object_or_404(Mindset.objects.all(), id=f.get('id'))
-            mindsets.append(mindset)
-            mindset.delete()
-        return Response({"message": "`{}` have been deleted".format(mindsets)},status=status.HTTP_202_ACCEPTED)
+    def delete(self,request,mindset_id):
+        ms = get_object_or_404(Mindset.objects.all(), id=mindset_id)
+        mindset = get_object_or_404(Mindset.objects.all(), id=mindset_id)
+        mindset.delete()
+        return Response({"message": "`{}` have been deleted".format(ms)},status=status.HTTP_202_ACCEPTED)
