@@ -63,7 +63,7 @@ class ReminderView(APIView):
 class DailyView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     def get(self, request, daily_id=None):
-        print('request.data', Mindset.objects.get(id=1).name)
+        print('request.data', Day.objects.get(id=1).name)
         if daily_id is not None:
             daily = get_object_or_404(Daily.objects.all(), id = daily_id)
             serialized_daily = DailySerializer(daily)
@@ -73,9 +73,9 @@ class DailyView(APIView):
         return Response(serializer.data)
     def post(self, request):
         serializer = DailySerializer(data=request.data, many=True)
-        print('!!!!!USER:!!!!!!', request.data[0]['mindset'])
+        print('!!!!!USER:!!!!!!', request.data[0]['daily'])
         if serializer.is_valid():
-            serializer.save(mindset=Mindset.objects.filter(id=request.data[0]['mindset'].get('id')).first())
+            serializer.save(day=Day.objects.filter(id=request.data[0]['day'].get('id')).first())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):

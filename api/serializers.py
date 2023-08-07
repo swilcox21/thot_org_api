@@ -87,7 +87,7 @@ class DailySerializer(serializers.ModelSerializer):
         return instance
     def create(self, validated_data):
         order = len(Daily.objects.all())
-        print("REMINDER:", order)
+        print("DAILY:", order)
         return Daily.objects.create(order=order + 1, **validated_data)
 
 class DaySerializer(serializers.ModelSerializer):
