@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from api.models import Reminder, Day, Daily, Mindset, Thot
+from api.models import Reminder, Day_1, Daily_1, Mindset, Thot
 
 
 class ReminderSerializer(serializers.ModelSerializer):
@@ -44,11 +44,11 @@ class _DaySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     name = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:                                 
-        model = Day
+        model = Day_1
         fields = ['created_date','name','id','owner']
 class _DailySerializer(serializers.ModelSerializer): 
     class Meta:                                 
-        model = Daily
+        model = Daily_1
         fields = ['text','id','order']
 
 class DailySerializer(serializers.ModelSerializer):
@@ -60,7 +60,7 @@ class DailySerializer(serializers.ModelSerializer):
     char2 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     class Meta:
-        model = Daily
+        model = Daily_1
         fields = ['created_date','text','id','day','show','order','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.day = validated_data.get('day', instance.day)
@@ -86,8 +86,8 @@ class DailySerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     def create(self, validated_data):
-        order = len(Daily.objects.all())
-        return Daily.objects.create(order=order + 1, **validated_data)
+        order = len(Daily_1.objects.all())
+        return Daily_1.objects.create(order=order + 1, **validated_data)
 
 class DaySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
@@ -97,10 +97,10 @@ class DaySerializer(serializers.ModelSerializer):
     char1 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     char2 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
     char3 = serializers.CharField(required=False, allow_blank=True, max_length=5000)
-    dailys = _DailySerializer(many=True, required=False)
+    dailys_1 = _DailySerializer(many=True, required=False)
     class Meta:
-        model = Day
-        fields = ['created_date','name','id','owner','weather','dailys','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
+        model = Day_1
+        fields = ['created_date','name','id','owner','weather','dailys_1','char1','char2','char3','int1','int2','int3','int4','int5','int6','bool1','bool2','bool3','bool4','bool5','bool5','bool6']
     def update(self, instance, validated_data):
         instance.weather = validated_data.get('weather', instance.weather)
         instance.name = validated_data.get('name', instance.name)
@@ -122,7 +122,7 @@ class DaySerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     def create(self, validated_data):
-        return Day.objects.create(**validated_data)
+        return Day_1.objects.create(**validated_data)
 
 class _MindsetSerializer(serializers.ModelSerializer): 
     owner = serializers.ReadOnlyField(source='owner.username')
